@@ -9,6 +9,3 @@ matrix:
 before_script:
 - travis_retry composer self-update
 - travis_retry composer install --prefer-dist --dev
-notifications:
-  slack:
-    secure: KIarlb9QnPFuneGkcDyepKIVMgreZt8RVXmkkWMHBB81dGQJ/HJ9WkepWjVEWmW188mrVxVTBNZmLiUigS4re1re/c5oX7jtSIWA3Tz5LSl2g6hzEFaSHt9BoZ3VI8YR9DDaE7SbTD1uU/IibLww+y3r9Yh92zxh7nmdBcTDwVo=
