@@ -65,8 +65,10 @@ class Response
      */
     public function parse(): self
     {
-        if (isset($this->raw->{$this->resource})) {
-            $this->setData($this->raw->{$this->resource});
+        $dataRoot = str_replace('-', '_', $this->resource);
+
+        if (isset($this->raw->{$dataRoot})) {
+            $this->setData($this->raw->{$dataRoot});
         }
 
         if (isset($this->raw->links)) {
