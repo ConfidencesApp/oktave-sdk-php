@@ -2,6 +2,17 @@
 
 namespace Oktave;
 
+use Oktave\Resources\BlacklistItems;
+use Oktave\Resources\Campaigns;
+
+/**
+ * Class Client
+ *
+ * @package Oktave
+ *
+ * @property Campaigns $campaigns
+ * @property BlacklistItems $blacklistItems
+ */
 class Client
 {
     /**
