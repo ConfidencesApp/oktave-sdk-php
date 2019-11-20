@@ -4,6 +4,7 @@ namespace Oktave;
 
 use Oktave\Resources\BlacklistItems;
 use Oktave\Resources\Campaigns;
+use Oktave\Resources\Webhooks;
 
 /**
  * Class Client
@@ -12,6 +13,7 @@ use Oktave\Resources\Campaigns;
  *
  * @property Campaigns      $campaigns
  * @property BlacklistItems $blacklistItems
+ * @property Webhooks       $webhooks
  */
 class Client
 {
@@ -44,6 +46,11 @@ class Client
      * @var string Oktave Oauth 2 Client credentials secret
      */
     private $client_secret;
+
+    /**
+     * @var string Oktave webhook secret
+     */
+    private $webhook_secret;
 
     /**
      *  __get overloads the client with a property that will check if there is a resource for the given $method
@@ -81,6 +88,9 @@ class Client
         }
         if (isset($config['client_secret'])) {
             $this->setClientSecret($config['client_secret']);
+        }
+        if (isset($config['webhook_secret'])) {
+            $this->setWebhookSecret($config['webhook_secret']);
         }
         if (isset($config['api_endpoint'])) {
             $this->setBaseURL($config['api_endpoint']);
@@ -181,6 +191,29 @@ class Client
     public function setClientSecret(string $secret): self
     {
         $this->client_secret = $secret;
+        return $this;
+    }
+
+    /**
+     * Get the webhook_secret for Oktave Webhook origin validation
+     *
+     * @return string|null
+     */
+    public function getWebhookSecret(): ?string
+    {
+        return $this->webhook_secret;
+    }
+
+    /**
+     * Set the webhook_secret for Oktave Webhook origin validation
+     *
+     * @param  string  $webhookSecret
+     *
+     * @return Client
+     */
+    public function setWebhookSecret(string $webhookSecret): Client
+    {
+        $this->webhook_secret = $webhookSecret;
         return $this;
     }
 }

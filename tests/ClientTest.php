@@ -13,9 +13,10 @@ class ClientTest extends TestCase
     private $underTest;
 
     private $initialConfig = [
-        'client_id'     => 'abc',
-        'client_secret' => '123',
-        'api_endpoint'  => 'https://api-test.oktave.com',
+        'client_id'      => 'abc',
+        'client_secret'  => '123',
+        'api_endpoint'   => 'https://api-test.oktave.com',
+        'webhook_secret' => 'secret',
     ];
 
     public function setUp(): void
@@ -31,6 +32,11 @@ class ClientTest extends TestCase
     public function testSetUpConfiguresClientSecret(): void
     {
         $this->assertEquals($this->initialConfig['client_secret'], $this->underTest->getClientSecret());
+    }
+
+    public function testSetUpConfiguresWebhookSecret(): void
+    {
+        $this->assertEquals($this->initialConfig['webhook_secret'], $this->underTest->getWebhookSecret());
     }
 
     public function testGetBase(): void
