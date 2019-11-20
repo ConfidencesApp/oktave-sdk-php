@@ -25,7 +25,7 @@ class ResourceTest extends TestCase
     private $requestLibrary;
 
     /**
-     * @var Oktave\Resources\Surveys
+     * @var Oktave\Resources\Campaigns
      */
     private $underTest;
 
@@ -35,7 +35,7 @@ class ResourceTest extends TestCase
         $this->client->shouldReceive('getAPIEndpoint')
             ->andReturn('https://api.oktave.com')
             ->shouldReceive('getAuthEndpoint')
-            ->andReturn('https://api.oktave.com/oauth/access_token')
+            ->andReturn('https://api.oktave.com/api/token')
             ->shouldReceive('getClientID')
             ->andReturn('123')
             ->shouldReceive('getClientSecret')
@@ -73,7 +73,7 @@ class ResourceTest extends TestCase
             ->shouldReceive('getRaw')
             ->andReturn(new StdClass);
 
-        $this->underTest = new Oktave\Resources\Surveys($this->client, $this->requestLibrary, $this->storage);
+        $this->underTest = new Oktave\Resources\Campaigns($this->client, $this->requestLibrary, $this->storage);
     }
 
     public function testSortMethodUpdatesSort(): void
@@ -178,7 +178,7 @@ class ResourceTest extends TestCase
             ->shouldReceive('getRaw')
             ->andReturn(new StdClass);
 
-        $test = new Oktave\Resources\Surveys($this->client, $requestLibrary, $this->storage);
+        $test = new Oktave\Resources\Campaigns($this->client, $requestLibrary, $this->storage);
 
         $this->assertEquals('ef6206afa0a8a95d342c10b9eadb3082e19c8021', $test->getAccessToken());
     }
@@ -214,7 +214,7 @@ class ResourceTest extends TestCase
             ->shouldReceive('getRaw')
             ->andReturn(new StdClass);
 
-        $test = new Oktave\Resources\Surveys($this->client, $requestLibrary, $this->storage);
+        $test = new Oktave\Resources\Campaigns($this->client, $requestLibrary, $this->storage);
         $test->makeAuthenticationCall();
     }
 
