@@ -285,7 +285,7 @@ class Resource
         $data = $authResponse->getRaw();
 
         // save the access token result
-        $this->storage->setKey('authentication', [
+        $this->storage->setKey('authentication', (object) [
             'access_token' => $data->access_token,
             'expires'      => $data->expires_in + time(),
         ]);
