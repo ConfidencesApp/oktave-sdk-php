@@ -10,7 +10,7 @@ use Oktave\Resources\Campaigns;
  *
  * @package Oktave
  *
- * @property Campaigns $campaigns
+ * @property Campaigns      $campaigns
  * @property BlacklistItems $blacklistItems
  */
 class Client

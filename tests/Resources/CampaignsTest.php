@@ -90,7 +90,7 @@ class CampaignsTest extends TestCase
         $this->requestLibrary
             ->shouldReceive('setBody')
             ->with([
-                'recipients' => ['email@example.com']
+                'recipients' => ['email@example.com'],
             ]);
 
         $sut = new Oktave\Resources\Campaigns($this->client, $this->requestLibrary, $this->storage);
@@ -107,7 +107,7 @@ class CampaignsTest extends TestCase
         $this->requestLibrary
             ->shouldReceive('setBody')
             ->with([
-                'recipients' => ['email1@example.com', 'email2@example.com']
+                'recipients' => ['email1@example.com', 'email2@example.com'],
             ]);
 
         $sut = new Oktave\Resources\Campaigns($this->client, $this->requestLibrary, $this->storage);
@@ -125,8 +125,8 @@ class CampaignsTest extends TestCase
             ->shouldReceive('setBody')
             ->with([
                 'recipients' => [
-                    ['email' => 'email@example.com', 'foo' => 'bar']
-                ]
+                    ['email' => 'email@example.com', 'foo' => 'bar'],
+                ],
             ]);
 
         $sut = new Oktave\Resources\Campaigns($this->client, $this->requestLibrary, $this->storage);
@@ -145,14 +145,14 @@ class CampaignsTest extends TestCase
             ->with([
                 'recipients' => [
                     ['email' => 'email1@example.com', 'foo' => 'bar'],
-                    ['email' => 'email2@example.com', 'foo' => 'baz']
-                ]
+                    ['email' => 'email2@example.com', 'foo' => 'baz'],
+                ],
             ]);
 
         $sut = new Oktave\Resources\Campaigns($this->client, $this->requestLibrary, $this->storage);
         $sut->send('321', [
             ['email' => 'email1@example.com', 'foo' => 'bar'],
-            ['email' => 'email2@example.com', 'foo' => 'baz']
+            ['email' => 'email2@example.com', 'foo' => 'baz'],
         ]);
 
         $this->addToAssertionCount(

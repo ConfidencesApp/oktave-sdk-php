@@ -42,14 +42,14 @@ class Campaigns extends Resource
         $recipients = $this->prepareRecipients($recipients);
 
         $data = [
-            'recipients' => $recipients
+            'recipients' => $recipients,
         ];
 
-        if($scheduleDate instanceof DateTime) {
+        if ($scheduleDate instanceof DateTime) {
             $data['schedule_for'] = $scheduleDate;
         }
 
-        if(is_integer($scheduleDate)) {
+        if (is_integer($scheduleDate)) {
             $data['delay'] = $scheduleDate;
         }
 
@@ -59,12 +59,13 @@ class Campaigns extends Resource
     /**
      * Reformat the recipients source for API call
      *
-     * @param array|string $recipients
+     * @param  array|string  $recipients
      *
      * @return array
      * @throws InvalidArgumentException
      */
-    private function prepareRecipients($recipients) {
+    private function prepareRecipients($recipients)
+    {
         if (is_string($recipients)) {
             return [$recipients];
         }
@@ -74,7 +75,7 @@ class Campaigns extends Resource
                 throw new InvalidArgumentException('Recipients list cannot be empty');
             }
             // ensure that $recipients is an array of recipient data
-            if($this->isRecipientDataArray($recipients)) {
+            if ($this->isRecipientDataArray($recipients)) {
                 return [$recipients];
             }
             // ensure that $recipients is an array of recipients and not an array of recipient data array
@@ -89,7 +90,7 @@ class Campaigns extends Resource
     /**
      * Check if the provided recipient is a recipient data array (associative array, string key/value pairs)
      *
-     * @param mixed $recipient
+     * @param  mixed  $recipient
      *
      * @return bool
      */
