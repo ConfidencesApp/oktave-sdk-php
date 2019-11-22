@@ -2,10 +2,14 @@
 
 namespace Oktave;
 
+use GuzzleHttp\Exception\GuzzleException;
+use Oktave\Exceptions\InvalidArgumentException;
 use Oktave\Interfaces\Storage;
 
 class Resource
 {
+    const PER_PAGE_VALUES = [10, 20, 50, 100];
+
     /**
      * @var null|Client
      */
@@ -29,12 +33,12 @@ class Resource
     /**
      * @var int
      */
-    private $limit = 0;
+    private $perPage = 0;
 
     /**
      * @var int
      */
-    private $offset = 0;
+    private $page = 0;
 
     /**
      * @var array
@@ -127,53 +131,58 @@ class Resource
     }
 
     /**
-     *  Set a limit on the number of resources
+     *  Set a limit on the number of resources per page
      *
-     * @param  int  $limit
+     * @param  int  $perPage
      *
      * @return $this
+     * @throws InvalidArgumentException
      */
-    public function limit(int $limit = 0): self
+    public function perPage(int $perPage = 0): self
     {
-        $this->limit = $limit;
+        if(!in_array($perPage, array_merge([0], self::PER_PAGE_VALUES))) {
+            throw new InvalidArgumentException('PerPage value must be in '.implode(', ', self::PER_PAGE_VALUES));
+        }
+        $this->perPage = $perPage;
+
         return $this;
     }
 
     /**
-     *  Get the resource limit
+     *  Get the resource perPage
      *
      * @return int
      */
-    public function getLimit(): ?int
+    public function getPerPage(): ?int
     {
-        return $this->limit;
+        return $this->perPage;
     }
 
     /**
-     *  Set an offset on the resources
+     *  Set an page on the resources
      *
-     * @param  int  $offset
+     * @param  int  $page
      *
      * @return $this
      */
-    public function offset(int $offset = 0): self
+    public function page(int $page = 0): self
     {
-        $this->offset = $offset;
+        $this->page = $page;
         return $this;
     }
 
     /**
-     *  Get the resource offset
+     *  Get the resource page
      *
      * @return int
      */
-    public function getOffset(): int
+    public function getPage(): int
     {
-        return $this->offset;
+        return $this->page;
     }
 
     /**
-     *  Get the resource offset
+     *  Get the resource page
      *
      * @return string
      */
@@ -191,7 +200,7 @@ class Resource
      * @throws Exceptions\AuthenticationException
      * @throws Exceptions\InvalidContentType
      * @throws Exceptions\InvalidRequestMethod
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function get(string $id): Response
     {
@@ -205,7 +214,7 @@ class Resource
      * @throws Exceptions\AuthenticationException
      * @throws Exceptions\InvalidContentType
      * @throws Exceptions\InvalidRequestMethod
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function all(): Response
     {
@@ -217,11 +226,11 @@ class Resource
      *
      * @param  string the ID of the resource to delete
      *
-     * @return Resource
+     * @return Response
      * @throws Exceptions\AuthenticationException
      * @throws Exceptions\InvalidContentType
      * @throws Exceptions\InvalidRequestMethod
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function delete($id): Response
     {
@@ -238,7 +247,7 @@ class Resource
      * @throws Exceptions\AuthenticationException
      * @throws Exceptions\InvalidContentType
      * @throws Exceptions\InvalidRequestMethod
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function update(string $id, ?array $data = []): Response
     {
@@ -254,7 +263,7 @@ class Resource
      * @throws Exceptions\AuthenticationException
      * @throws Exceptions\InvalidContentType
      * @throws Exceptions\InvalidRequestMethod
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function create(?array $data = []): Response
     {
@@ -268,7 +277,7 @@ class Resource
      * @throws Exceptions\AuthenticationException
      * @throws Exceptions\InvalidContentType
      * @throws Exceptions\InvalidRequestMethod
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function getAccessToken(): string
     {
@@ -301,7 +310,7 @@ class Resource
      * @throws Exceptions\AuthenticationException
      * @throws Exceptions\InvalidContentType
      * @throws Exceptions\InvalidRequestMethod
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function makeAuthenticationCall(): Response
     {
@@ -332,7 +341,7 @@ class Resource
      * @throws Exceptions\AuthenticationException
      * @throws Exceptions\InvalidContentType
      * @throws Exceptions\InvalidRequestMethod
-     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws GuzzleException
      */
     public function call(
         $method,
@@ -375,11 +384,11 @@ class Resource
     {
         $params = [];
 
-        if ($this->limit > 0) {
-            $params['page']['limit'] = $this->limit;
+        if ($this->perPage > 0) {
+            $params['per_page'] = $this->perPage;
         }
-        if ($this->offset > 0) {
-            $params['page']['offset'] = $this->offset;
+        if ($this->page > 0) {
+            $params['page'] = $this->page;
         }
         if ($this->sort) {
             $params['sort'] = $this->sort;

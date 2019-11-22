@@ -89,22 +89,30 @@ class ResourceTest extends TestCase
         $this->assertEquals($this->underTest->getSort(), null);
     }
 
-    public function testLimitMethodUpdatesLimit(): void
+    public function testInvalidPerPageValueThrowException(): void
     {
-        $this->underTest->limit(5);
-        $this->assertEquals($this->underTest->getLimit(), 5);
+        $this->expectException(Oktave\Exceptions\InvalidArgumentException::class);
+        $this->expectErrorMessage('PerPage value must be in 10, 20, 50, 100');
+        $this->underTest->perPage(5);
+        $this->assertEquals($this->underTest->getPerPage(), 0);
+    }
+
+    public function testPerPageMethodUpdatesPerPage(): void
+    {
+        $this->underTest->perPage(20);
+        $this->assertEquals($this->underTest->getPerPage(), 20);
     }
 
     public function testOffsetMethodUpdatesOffset(): void
     {
-        $this->underTest->offset(20);
-        $this->assertEquals($this->underTest->getOffset(), 20);
+        $this->underTest->page(20);
+        $this->assertEquals($this->underTest->getPage(), 20);
     }
 
     public function testOffsetMethodToFalseUpdatesOffset(): void
     {
-        $this->underTest->offset(false);
-        $this->assertEquals($this->underTest->getOffset(), false);
+        $this->underTest->page(0);
+        $this->assertEquals($this->underTest->getPage(), 0);
     }
 
     public function testGetStorageReturnsStorage(): void
@@ -220,9 +228,9 @@ class ResourceTest extends TestCase
 
     public function testBuildQueryStringParams(): void
     {
-        $this->underTest->with(['categories'])->limit(5)->offset(3)->sort('name');
+        $this->underTest->with(['categories'])->perPage(10)->page(3)->sort('name');
         $this->assertEquals(
-            ['page' => ['limit' => 5, 'offset' => 3], 'sort' => 'name'],
+            ['per_page' => 10, 'page' => 3, 'sort' => 'name'],
             $this->underTest->buildQueryStringParams()
         );
     }
