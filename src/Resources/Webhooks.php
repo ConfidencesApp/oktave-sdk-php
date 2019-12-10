@@ -5,10 +5,21 @@ namespace Oktave\Resources;
 use Oktave\Client;
 use Oktave\Exceptions\InvalidConfigurationException;
 use Oktave\Exceptions\ValidationException;
+use Oktave\Resource;
 
-class Webhooks
+class Webhooks extends Resource
 {
     const HMAC_HASH_ALGO = 'sha256';
+
+    /**
+     * {@inheritDoc}
+     */
+    public $resourceCollection = 'webhooks';
+
+    /**
+     * {@inheritDoc}
+     */
+    public $resource = 'webhook';
 
     /**
      * @var Client
