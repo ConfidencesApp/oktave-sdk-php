@@ -8,6 +8,13 @@ use PHPUnit\Framework\TestCase;
 
 class WebhooksTest extends TestCase
 {
+    public function testWebhooksCanBeRetrievedFromClient(): void
+    {
+        $client = new Oktave\Client();
+
+        $this->assertInstanceOf(Oktave\Resources\Webhooks::class, $client->webhooks);
+    }
+
     public function testThrowExceptionIfNoWebhookSecretProvided(): void
     {
         $client = Mockery::mock(Oktave\Client::class);
