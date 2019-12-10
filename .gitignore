@@ -1,10 +1,23 @@
+# Folders
 /ignore
 /vendor
-composer.lock
 
-.DS_STORE
-._*
+# Configuration
+/.env
+/composer.lock
+
+# IDE
+/.idea
+/.vagrant
+/.vscode
+/.editorconfig
+/.phpstorm.meta.php
+/_ide_helper.php
+
+# Operating System
+.DS_Store
 Thumbs.db
 Desktop.ini
-sftp-config.json
+
+# Tools cache
 .phpunit.result.cache
