@@ -40,7 +40,7 @@ class ResourceTest extends TestCase
             ->andReturn('123')
             ->shouldReceive('getClientSecret')
             ->andReturn('456')
-            ->shouldReceive('getTeam')
+            ->shouldReceive('getTeamId')
             ->andReturn(null);
 
         $this->storage = Mockery::mock(Oktave\Interfaces\Storage::class);
@@ -156,21 +156,21 @@ class ResourceTest extends TestCase
     public function testCanMakeRequestForSpecificTeam(): void
     {
         $id = 'c9b96b2f-574d-43f7-be53-3737959ddbb1';
-        $teamId = '44395255-6d04-4187-a07f-706fa8a9c901';
+        $team_id = '44395255-6d04-4187-a07f-706fa8a9c901';
 
-        $this->client->shouldReceive('getTeam')
-            ->andReturn($teamId);
+        $this->client->shouldReceive('getTeamId')
+            ->andReturn($team_id);
 
         $this->requestLibrary->shouldReceive('addHeader')
-            ->with('Oktave-Use-Team-Id', $teamId);
+            ->with('Oktave-Use-Team-Id', $team_id);
 
         $this->assertInstanceof(Oktave\Response::class, $this->underTest->call(
             'GET',
             [],
             $id,
             [],
-        true,
-        false
+            true,
+            false
         ));
     }
 

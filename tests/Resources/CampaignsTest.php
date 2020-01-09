@@ -40,7 +40,7 @@ class CampaignsTest extends TestCase
             ->andReturn('123')
             ->shouldReceive('getClientSecret')
             ->andReturn('456')
-            ->shouldReceive('getTeam')
+            ->shouldReceive('getTeamId')
             ->andReturn(null);
 
         $this->storage = Mockery::mock(Oktave\Interfaces\Storage::class);

@@ -372,8 +372,8 @@ class Resource
             $request->addHeader('Authorization', 'Bearer '.$this->getAccessToken());
         }
 
-        if ($this->client->getTeam()) {
-            $request->addHeader('Oktave-Use-Team-Id', $this->client->getTeam());
+        if ($this->client->getTeamId()) {
+            $request->addHeader('Oktave-Use-Team-Id', $this->client->getTeamId());
         }
 
         return $request->make($id !== null ? $this->resource : $this->resourceCollection)->getResponse();

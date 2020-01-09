@@ -53,9 +53,9 @@ class Client
     private $webhook_secret;
 
     /**
-     * @var string|null Current Oktave Team
+     * @var string|null Current Oktave Team Id
      */
-    private $team;
+    private $team_id;
 
     /**
      *  __get overloads the client with a property that will check if there is a resource for the given $method
@@ -100,8 +100,8 @@ class Client
         if (isset($config['api_endpoint'])) {
             $this->setBaseURL($config['api_endpoint']);
         }
-        if (isset($config['team'])) {
-            $this->setTeam($config['team']);
+        if (isset($config['team_id'])) {
+            $this->setTeamId($config['team_id']);
         }
     }
 
@@ -213,26 +213,26 @@ class Client
     }
 
     /**
-     * Set the current Oktave team for API calls
+     * Set the current Oktave team Id for API calls
      *
      * @param  string|null  $teamId
      *
      * @return Client
      */
-    public function setTeam(?string $teamId = null): Client
+    public function setTeamId(?string $teamId = null): Client
     {
-        $this->team = $teamId;
+        $this->team_id = $teamId;
         return $this;
     }
 
     /**
-     * Get the current Oktave team for API calls
+     * Get the current Oktave team Id for API calls
      *
      * @return string|null
      */
-    public function getTeam(): ?string
+    public function getTeamId(): ?string
     {
-        return $this->team;
+        return $this->team_id;
     }
 
     /**

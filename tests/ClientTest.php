@@ -17,7 +17,7 @@ class ClientTest extends TestCase
         'client_secret'  => '123',
         'api_endpoint'   => 'https://api-test.oktave.com',
         'webhook_secret' => 'secret',
-        'team'           => '44395255-6d04-4187-a07f-706fa8a9c901',
+        'team_id'        => '44395255-6d04-4187-a07f-706fa8a9c901',
     ];
 
     public function setUp(): void
@@ -60,16 +60,16 @@ class ClientTest extends TestCase
         $this->assertEquals($this->underTest->getAPIEndpoint(), 'https://api-test.oktave.com/');
     }
 
-    public function testGetTeam(): void
+    public function testGetTeamId(): void
     {
-        $this->assertEquals($this->underTest->getTeam(), '44395255-6d04-4187-a07f-706fa8a9c901');
+        $this->assertEquals($this->underTest->getTeamId(), '44395255-6d04-4187-a07f-706fa8a9c901');
     }
 
-    public function testResetTeam(): void
+    public function testResetTeamId(): void
     {
-        $this->assertEquals($this->underTest->getTeam(), '44395255-6d04-4187-a07f-706fa8a9c901');
-        $this->underTest->setTeam(null);
-        $this->assertEquals($this->underTest->getTeam(), null);
+        $this->assertEquals($this->underTest->getTeamId(), '44395255-6d04-4187-a07f-706fa8a9c901');
+        $this->underTest->setTeamId(null);
+        $this->assertEquals($this->underTest->getTeamId(), null);
     }
 
     public function testGetAPIEndpointWithURIReturnsCorrectURL(): void

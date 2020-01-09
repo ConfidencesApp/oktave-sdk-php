@@ -9,7 +9,7 @@ You can install the package manually or by adding it to your `composer.json`:
 ```
 {
   "require": {
-      "confidencesapp/oktave-sdk-php": "^0.1.0"
+      "confidencesapp/oktave-sdk-php": "^0.2.0"
   }
 }
 ```
@@ -46,7 +46,7 @@ Pass in the team ID to the client:
 ```php
 $config = [
     // ...
-    'team' => '{your_team_uuid}'
+    'team_id' => '{your_team_uuid}' // optional, required to specify a team ID
 ];
 $oktave = new Oktave\Client($config);
 ```
@@ -55,7 +55,7 @@ Or configure after construct:
 
 ```php
 $oktave = new Oktave\Client($config)
-            ->setTeam('uuid'); // optional, required to specify a team ID
+            ->setTeamId('uuid'); // optional, required to specify a team ID
 ```
 
 **Attention!** If no `team` is specified, the team on which the OAuth client has been declared is used by default.
@@ -68,7 +68,7 @@ Reset to the default team without its ID:
 ```php
 // set the team to null.
 $oktave = new Oktave\Client($config)
-            ->setTeam(null);
+            ->setTeamId(null);
 ```
 
 **Note:** the team value can be updated at anytime, for example between resource calls.
