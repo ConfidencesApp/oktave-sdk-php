@@ -7,7 +7,7 @@ use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Psr7\MultipartStream as MultipartStream;
 use Oktave\Client as Client;
 
-class Request
+class  Request
 {
 
     /**

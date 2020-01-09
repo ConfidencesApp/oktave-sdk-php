@@ -20,7 +20,7 @@ Pass in the configuration to the client:
 
 ```php
 $config = [
-    'client_id' => '{your_client_id}',
+    'client_id' => '{your_client_uuid}',
     'client_secret' => '{your_client_secret}',
     'webhook_secret' => '{your_webhook_secret}', // optional, required for request signature validation
 ];
@@ -38,6 +38,40 @@ $oktave = new Oktave\Client()
 
 **Note:** if you are unsure what your `client_id`, `client_secret` or `webhook_secret` are, please go to
 [your account](https://app.oktave.co/account/developer) and copy them.
+
+## For multiple teams users:
+
+Pass in the team ID to the client:
+
+```php
+$config = [
+    // ...
+    'team' => '{your_team_uuid}'
+];
+$oktave = new Oktave\Client($config);
+```
+
+Or configure after construct:
+
+```php
+$oktave = new Oktave\Client($config)
+            ->setTeam('uuid'); // optional, required to specify a team ID
+```
+
+**Attention!** If no `team` is specified, the team on which the OAuth client has been declared is used by default.
+
+**Note:** if you are unsure what your `team` is, please go to
+[your account](https://app.oktave.co/account/developer) and copy it.
+
+Reset to the default team without its ID:
+
+```php
+// set the team to null.
+$oktave = new Oktave\Client($config)
+            ->setTeam(null);
+```
+
+**Note:** the team value can be updated at anytime, for example between resource calls.
 
 ## On-Premise Customers
 

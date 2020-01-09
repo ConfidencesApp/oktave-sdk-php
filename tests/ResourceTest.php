@@ -40,8 +40,8 @@ class ResourceTest extends TestCase
             ->andReturn('123')
             ->shouldReceive('getClientSecret')
             ->andReturn('456')
-            ->shouldReceive('getCurrencyCode')
-            ->andReturn('CURRENCY_CODE');
+            ->shouldReceive('getTeam')
+            ->andReturn(null);
 
         $this->storage = Mockery::mock(Oktave\Interfaces\Storage::class);
         $sessonObject = new stdClass();
@@ -151,6 +151,27 @@ class ResourceTest extends TestCase
     public function testCanMakeCreateRequest(): void
     {
         $this->assertInstanceof(Oktave\Response::class, $this->underTest->create([]));
+    }
+
+    public function testCanMakeRequestForSpecificTeam(): void
+    {
+        $id = 'c9b96b2f-574d-43f7-be53-3737959ddbb1';
+        $teamId = '44395255-6d04-4187-a07f-706fa8a9c901';
+
+        $this->client->shouldReceive('getTeam')
+            ->andReturn($teamId);
+
+        $this->requestLibrary->shouldReceive('addHeader')
+            ->with('Oktave-Use-Team-Id', $teamId);
+
+        $this->assertInstanceof(Oktave\Response::class, $this->underTest->call(
+            'GET',
+            [],
+            $id,
+            [],
+        true,
+        false
+        ));
     }
 
     public function testGetAccessTokenMakesAuthenticationCall(): void
