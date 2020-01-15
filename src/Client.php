@@ -30,7 +30,7 @@ class Client
     /**
      * @var string Oktave API endpoint
      */
-    private $base = 'https://api.oktave.com';
+    private $base = 'https://api.oktave.co';
 
     /**
      * @var string Oktave auth URI

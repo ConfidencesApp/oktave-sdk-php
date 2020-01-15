@@ -15,7 +15,7 @@ class ClientTest extends TestCase
     private $initialConfig = [
         'client_id'      => 'abc',
         'client_secret'  => '123',
-        'api_endpoint'   => 'https://api-test.oktave.com',
+        'api_endpoint'   => 'https://api-test.oktave.co',
         'webhook_secret' => 'secret',
         'team_id'        => '44395255-6d04-4187-a07f-706fa8a9c901',
     ];
@@ -42,7 +42,7 @@ class ClientTest extends TestCase
 
     public function testGetBase(): void
     {
-        $this->assertEquals($this->underTest->getBase(), 'https://api-test.oktave.com');
+        $this->assertEquals($this->underTest->getBase(), 'https://api-test.oktave.co');
     }
 
     public function testGetAuthURI(): void
@@ -52,12 +52,12 @@ class ClientTest extends TestCase
 
     public function testGetAuthEndpoint(): void
     {
-        $this->assertEquals($this->underTest->getAuthEndpoint(), 'https://api-test.oktave.com/api/token');
+        $this->assertEquals($this->underTest->getAuthEndpoint(), 'https://api-test.oktave.co/api/token');
     }
 
     public function testGetAPIEndpoint(): void
     {
-        $this->assertEquals($this->underTest->getAPIEndpoint(), 'https://api-test.oktave.com/');
+        $this->assertEquals($this->underTest->getAPIEndpoint(), 'https://api-test.oktave.co/');
     }
 
     public function testGetTeamId(): void
@@ -74,7 +74,7 @@ class ClientTest extends TestCase
 
     public function testGetAPIEndpointWithURIReturnsCorrectURL(): void
     {
-        $this->assertEquals($this->underTest->getAPIEndpoint('surveys/123'), 'https://api-test.oktave.com/surveys/123');
+        $this->assertEquals($this->underTest->getAPIEndpoint('surveys/123'), 'https://api-test.oktave.co/surveys/123');
     }
 
     public function testSetBaseURLUpdatesAPIEndpoint(): void

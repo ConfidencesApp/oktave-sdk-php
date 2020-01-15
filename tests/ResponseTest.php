@@ -20,7 +20,7 @@ class ResponseTest extends TestCase
 
     public function setUp(): void
     {
-        $this->rawResponse = '{"data":[{"type":"product","id":"80087cb1-1197-4942-83e2-40f3da39d3a1","name":"My Great Product","slug":"my-great-product","sku":"MGP_001","manage_stock":true,"description":"","price":[{"amount":5891,"currency":"USD","includes_tax":true},{"amount":7150,"currency":"GBP","includes_tax":true}],"status":"live","commodity_type":"physical","meta":{"display_price":{"with_tax":{"amount":7150,"currency":"GBP","formatted":"\u00a371.5"},"without_tax":{"amount":7150,"currency":"GBP","formatted":"\u00a371.5"}},"stock":{"level":0,"availability":"out-stock"}},"relationships":{}}],"links":{"current":"https:\/\/api.oktave.com\/v2\/products\/80087cb1-1197-4942-83e2-40f3da39d3a1","last":null},"meta":{"counts":{"matching_resource_count":1}},"errors":[]}';
+        $this->rawResponse = '{"data":[{"type":"product","id":"80087cb1-1197-4942-83e2-40f3da39d3a1","name":"My Great Product","slug":"my-great-product","sku":"MGP_001","manage_stock":true,"description":"","price":[{"amount":5891,"currency":"USD","includes_tax":true},{"amount":7150,"currency":"GBP","includes_tax":true}],"status":"live","commodity_type":"physical","meta":{"display_price":{"with_tax":{"amount":7150,"currency":"GBP","formatted":"\u00a371.5"},"without_tax":{"amount":7150,"currency":"GBP","formatted":"\u00a371.5"}},"stock":{"level":0,"availability":"out-stock"}},"relationships":{}}],"links":{"current":"https:\/\/api.oktave.co\/v2\/products\/80087cb1-1197-4942-83e2-40f3da39d3a1","last":null},"meta":{"counts":{"matching_resource_count":1}},"errors":[]}';
         $this->underTest = new Oktave\Response();
         $this->underTest->setRaw(json_decode($this->rawResponse))->parse();
     }

@@ -33,9 +33,9 @@ class CampaignsTest extends TestCase
     {
         $this->client = Mockery::mock(Oktave\Client::class);
         $this->client->shouldReceive('getAPIEndpoint')
-            ->andReturn('https://api.oktave.com')
+            ->andReturn('https://api.oktave.co')
             ->shouldReceive('getAuthEndpoint')
-            ->andReturn('https://api.oktave.com/api/token')
+            ->andReturn('https://api.oktave.co/api/token')
             ->shouldReceive('getClientID')
             ->andReturn('123')
             ->shouldReceive('getClientSecret')
