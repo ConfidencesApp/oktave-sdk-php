@@ -2,6 +2,8 @@
 
 namespace Oktave\SDK\Tests\Resources;
 
+use DateInterval;
+use DateTime;
 use Mockery;
 use Oktave;
 use PHPUnit\Framework\TestCase;
@@ -25,7 +27,7 @@ class CampaignsTest extends TestCase
     private $requestLibrary;
 
     /**
-     * @var Oktave\Resources\BlacklistItems
+     * @var Oktave\Resources\Campaigns
      */
     private $underTest;
 
@@ -93,10 +95,13 @@ class CampaignsTest extends TestCase
             ->shouldReceive('setBody')
             ->with([
                 'recipients' => ['email@example.com'],
+                'emitter' => [
+                    'delay' => 0,
+                    'scheduled_for' => null
+                ]
             ]);
 
-        $sut = new Oktave\Resources\Campaigns($this->client, $this->requestLibrary, $this->storage);
-        $sut->send('321', 'email@example.com');
+        $this->underTest->send('321', 'email@example.com');
 
         $this->addToAssertionCount(
             Mockery::getContainer()->mockery_getExpectationCount()
@@ -110,10 +115,13 @@ class CampaignsTest extends TestCase
             ->shouldReceive('setBody')
             ->with([
                 'recipients' => ['email1@example.com', 'email2@example.com'],
+                'emitter' => [
+                    'delay' => 0,
+                    'scheduled_for' => null
+                ]
             ]);
 
-        $sut = new Oktave\Resources\Campaigns($this->client, $this->requestLibrary, $this->storage);
-        $sut->send('321', ['email1@example.com', 'email2@example.com']);
+        $this->underTest->send('321', ['email1@example.com', 'email2@example.com']);
 
         $this->addToAssertionCount(
             Mockery::getContainer()->mockery_getExpectationCount()
@@ -129,10 +137,13 @@ class CampaignsTest extends TestCase
                 'recipients' => [
                     ['email' => 'email@example.com', 'foo' => 'bar'],
                 ],
+                'emitter' => [
+                    'delay' => 0,
+                    'scheduled_for' => null
+                ]
             ]);
 
-        $sut = new Oktave\Resources\Campaigns($this->client, $this->requestLibrary, $this->storage);
-        $sut->send('321', ['email' => 'email@example.com', 'foo' => 'bar']);
+        $this->underTest->send('321', ['email' => 'email@example.com', 'foo' => 'bar']);
 
         $this->addToAssertionCount(
             Mockery::getContainer()->mockery_getExpectationCount()
@@ -149,13 +160,59 @@ class CampaignsTest extends TestCase
                     ['email' => 'email1@example.com', 'foo' => 'bar'],
                     ['email' => 'email2@example.com', 'foo' => 'baz'],
                 ],
+                'emitter' => [
+                    'delay' => 0,
+                    'scheduled_for' => null
+                ]
             ]);
 
-        $sut = new Oktave\Resources\Campaigns($this->client, $this->requestLibrary, $this->storage);
-        $sut->send('321', [
+        $this->underTest->send('321', [
             ['email' => 'email1@example.com', 'foo' => 'bar'],
             ['email' => 'email2@example.com', 'foo' => 'baz'],
         ]);
+
+        $this->addToAssertionCount(
+            Mockery::getContainer()->mockery_getExpectationCount()
+        );
+        Mockery::close();
+    }
+
+    public function testSendWithDelay()
+    {
+        $this->requestLibrary
+            ->shouldReceive('setBody')
+            ->with([
+                'recipients' => ['email@example.com'],
+                'emitter' => [
+                    'delay' => 3600,
+                    'scheduled_for' => null
+                ]
+            ]);
+
+        $this->underTest->send('321', 'email@example.com', 3600);
+        
+        $this->addToAssertionCount(
+            Mockery::getContainer()->mockery_getExpectationCount()
+        );
+        Mockery::close();
+    }
+
+    public function testSendWithSchedulation()
+    {
+        $date = new DateTime();
+        $date->add(new DateInterval('PT1H'));
+
+        $this->requestLibrary
+            ->shouldReceive('setBody')
+            ->with([
+                'recipients' => ['email@example.com'],
+                'emitter' => [
+                    'delay' => 3600,
+                    'scheduled_for' => $date->format(DateTime::ISO8601)
+                ]
+            ]);
+
+        $this->underTest->send('321', 'email@example.com', $date);
 
         $this->addToAssertionCount(
             Mockery::getContainer()->mockery_getExpectationCount()

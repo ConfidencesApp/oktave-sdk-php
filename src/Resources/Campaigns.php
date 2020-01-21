@@ -43,14 +43,18 @@ class Campaigns extends Resource
 
         $data = [
             'recipients' => $recipients,
+            'emitter' => [
+                'scheduled_for' => null,
+                'delay' => 0,
+            ]
         ];
 
         if ($scheduleDate instanceof DateTime) {
-            $data['schedule_for'] = $scheduleDate;
+            $data['emitter']['scheduled_for'] = $scheduleDate->format(DateTime::ISO8601);
         }
 
         if (is_integer($scheduleDate)) {
-            $data['delay'] = $scheduleDate;
+            $data['emitter']['delay'] = $scheduleDate;
         }
 
         return $this->call('put', $data, $id.'/send');
