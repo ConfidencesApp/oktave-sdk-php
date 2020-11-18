@@ -9,7 +9,7 @@ You can install the package manually or by adding it to your `composer.json`:
 ```
 {
   "require": {
-      "confidencesapp/oktave-sdk-php": "^0.2.0"
+      "confidencesapp/oktave-sdk-php": "^0.3.0"
   }
 }
 ```
